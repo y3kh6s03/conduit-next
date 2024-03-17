@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const CONDUIT_URL: string | undefined = process.env.CONDUIT_API
+  const CONDUIT_URL: string | undefined = process.env.CONDUIT_BASE_APIURL
   if (CONDUIT_URL === undefined) {
     return NextResponse.json("URLが見つかりませんでした")
   }
