@@ -1,39 +1,33 @@
 "use client"
-
-import { ChangeEvent, FormEvent, useState } from "react"
-
-interface FormValues {
-  name: string,
-  email: string,
-  password: string
-}
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
 export default function RegisterForm() {
-  const [formValues, setFormValues] = useState<FormValues>({ name: '', email: '', password: '' });
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-
-    setFormValues({
-      ...formValues,
-      [e.target.name]: e.target.value
-    })
-  }
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log(formValues);
+  const router = useRouter()
+  const handleSubmit = async (formData: FormData) => {
+    const rawFormData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      password: formData.get('password')
+    }
+    const res = await axios.post('/api/register', { data: rawFormData })
+    const token = res.data;
+    if(token){
+      localStorage.setItem('token', token);
+      router.push('/')
+    }
   }
 
   return (
-    <form method="POST" onSubmit={handleSubmit}>
+    <form action={handleSubmit}>
       <fieldset className="form-group">
         <input
           className="form-control form-control-lg"
           type="text"
           placeholder="name"
           name="name"
-          value={formValues.name}
-          onChange={handleInputChange}
           autoComplete="username"
-          />
+        />
       </fieldset>
       <fieldset className="form-group">
         <input
@@ -41,10 +35,8 @@ export default function RegisterForm() {
           type="text"
           placeholder="Email"
           name="email"
-          value={formValues.email}
-          onChange={handleInputChange}
           autoComplete="email"
-          />
+        />
       </fieldset>
       <fieldset className="form-group">
         <input
@@ -52,8 +44,6 @@ export default function RegisterForm() {
           type="password"
           placeholder="Password"
           name="password"
-          value={formValues.password}
-          onChange={handleInputChange}
           autoComplete="current-password"
         />
       </fieldset>

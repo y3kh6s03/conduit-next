@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const { pathname } = new URL(request.url);
   const pathSegments = pathname.split('/');
   const slug = pathSegments[pathSegments.length - 1];
-  const CONDUIT_ARTICLE_URL: string | undefined = process.env.CONDUIT_BASE_APIURL + slug;
+  const CONDUIT_ARTICLE_URL: string | undefined = process.env.CONDUIT_BASE_APIURL + 'articles/' + slug;
   try {
     const data = await axios.get(CONDUIT_ARTICLE_URL)
     return NextResponse.json(data.data.article);
