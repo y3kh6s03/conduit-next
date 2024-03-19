@@ -9,11 +9,9 @@ export default function ArticleContent(article: { article: Article | undefined }
         <h2 id="introducing-ionic">{article.article?.body}</h2>
         <p>{article.article?.description}</p>
         <ul className="tag-list">
-          {article.article?.tagList.map((tag) => {
+          {article.article?.tagList.map((tag, index) => {
             return (
-              <>
-                <li key={tag} className="tag-default tag-pill tag-outline">{tag}</li>
-              </>
+              <li key={tag} className="tag-default tag-pill tag-outline">{tag}</li>
             )
           })}
         </ul>

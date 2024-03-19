@@ -31,9 +31,9 @@ export default function HomeArticle() {
   return (
     <div className="article-preview">
       {
-        test?.map((item) => {
+        test?.map((item,index) => {
           return (
-            <div key={item.slug}>
+            <div key={item.slug + index}>
               <div className="article-meta">
                 <a href="/profile/eric-simons">
                   <img src="http://i.imgur.com/Qr71crq.jpg" />
